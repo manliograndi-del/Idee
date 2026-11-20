@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stili per infografiche didattiche</title>
+<style>
+/* VOICE: pratico, da sala insegnanti, con le immagini in primo piano.
+   IDEA: un catalogo di mostra: ogni stile ha la sua parete con quattro opere.
+   PICTURE: le gallerie 2×2 di ogni riferimento, ingrandibili.
+   COLOUR and TYPE: carta bianca, inchiostro, blu cobalto, giallo evidenziatore; caratteri molto leggibili di sistema.
+   LAYOUT: titolo e indice, poi venti schede alternate testo/galleria, poi guida pratica. */
+:root{color-scheme:light dark;
+  --bg:light-dark(#ffffff,#121417);--ink:light-dark(#16181b,#eceef1);--soft:light-dark(#5a6068,#a7adb5);
+  --line:light-dark(#dfe2e6,#2c3036);--card:light-dark(#f4f5f7,#1b1e22);--blue:light-dark(#1f4bd8,#8aa6ff);
+  --hl:#ffd84a;--g:light-dark(#1d7a3e,#6fd394);--y:light-dark(#8a6400,#f2c94c);--r:light-dark(#b3261e,#ff8a80)}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",Verdana,"Segoe UI",system-ui,sans-serif;overflow-x:clip}
+a{color:var(--blue)}
+.band{padding:clamp(24px,4vw,56px) max(4vw,14px)}
+.wrap{max-width:1240px;margin:0 auto}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.05;margin:0 0 14px;text-wrap:balance;max-width:20ch}
+h2{font-size:clamp(24px,3vw,34px);line-height:1.12;margin:0 0 10px;text-wrap:balance}
+h3{font-size:clamp(20px,2.2vw,24px);line-height:1.2;margin:0}
+p{max-width:70ch}
+.lead{font-size:19px;max-width:64ch;margin:0}
+.mark{background:linear-gradient(transparent 55%,var(--hl) 55%);color:#16181b}
+.private{display:inline-block;margin-top:14px;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;color:var(--soft)}
+.mosaic{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin-top:22px}
+.mosaic img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;display:block}
+@media(max-width:700px){.mosaic{grid-template-columns:repeat(5,minmax(0,1fr))}.mosaic img:nth-child(n+11){display:none}}
+nav.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:8px max(4vw,14px)}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;font:inherit;font-size:15px;min-height:44px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible,.btn:focus-visible,.thumb:focus-visible,.lb button:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.count{font-size:14px;color:var(--soft);margin:12px 0 0}
+.ref{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(18px,3vw,40px);padding:clamp(22px,3vw,36px) 0;border-bottom:1px solid var(--line);align-items:start}
+.ref:nth-child(even) .txt{order:2}
+@media(max-width:860px){.ref{grid-template-columns:minmax(0,1fr)}.ref:nth-child(even) .txt{order:0}}
+.num{font-weight:700;color:var(--blue);font-size:15px;letter-spacing:.02em}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.tag{font-size:14px;color:var(--soft)}
+.bes{font-size:13px;font-weight:700;border-radius:6px;padding:2px 8px;white-space:nowrap}
+.bes.g{color:var(--g);border:1px solid var(--g)}.bes.y{color:var(--y);border:1px solid var(--y)}.bes.r{color:var(--r);border:1px solid var(--r)}
+.txt p{margin:8px 0;font-size:16px}
+.mat{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.mat span{font-size:13px;background:var(--card);border-radius:6px;padding:3px 8px}
+.kw{display:block;background:var(--card);border-radius:8px;padding:10px;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.btn{font:inherit;font-size:15px;min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid var(--blue);background:transparent;color:var(--blue);cursor:pointer}
+.btn.ok{background:var(--blue);color:#fff}
+.credit{font-size:13px;color:var(--soft);margin-top:10px}
+.gal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.thumb{all:unset;cursor:zoom-in;display:block;border-radius:10px;overflow:hidden;background:var(--card);position:relative}
+.thumb img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .25s}
+.thumb span{display:block;font-size:13px;line-height:1.35;padding:7px 9px;color:var(--soft)}
+@media(prefers-reduced-motion:no-preference){.thumb:hover img{transform:scale(1.03)}}
+.empty{padding:30px 0;color:var(--soft)}
+.alt{background:var(--card)}
+.alt .box{background:var(--bg)}
+.box{background:var(--card);border-radius:14px;padding:18px;margin:14px 0}
+ol.steps{padding-left:1.4em;max-width:75ch}ol.steps li{margin-bottom:10px}
+ul{max-width:75ch;padding-left:1.2em}li{margin-bottom:6px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:26px}
+footer{font-size:14px;color:var(--soft);border-top:1px solid var(--line)}
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:50;background:#0d0f11;display:none;flex-direction:column;align-items:center;justify-content:center;padding:56px 12px 12px;color:#f2f3f5}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:calc(100vh - 170px);object-fit:contain;border-radius:6px;background:#fff}
+.lb .cap{max-width:900px;text-align:center;font-size:15px;margin-top:10px}
+.lb .cap small{display:block;color:#b8bec6;font-size:13px;margin-top:2px}
+.lb button{font:inherit;min-width:48px;min-height:48px;border-radius:999px;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:22px;cursor:pointer}
+.lb .x{position:absolute;top:8px;right:10px}
+.lb .pv,.lb .nx{position:absolute;top:50%;transform:translateY(-50%)}
+.lb .pv{left:8px}.lb .nx{right:8px}
+@media(max-width:600px){.lb .pv,.lb .nx{top:auto;bottom:10px;transform:none}.lb{padding-bottom:70px}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <h1>Venti stili per infografiche che non sembrano fatte con l'AI</h1>
+    <p class="lead">Un catalogo di riferimenti visivi, premiati o molto seguiti, da usare come <span class="mark">esempio di stile</span> in NotebookLM o Gemini per i materiali semplificati di sostegno alla scuola media. Ogni stile ha quattro immagini originali (tocca per ingrandire), le materie adatte, il bollino per alunni con BES e le parole chiave da copiare.</p>
+    <span class="private">Uso privato e didattico: le immagini appartengono ai rispettivi autori. Non pubblicare questo sito online.</span>
+    <div class="mosaic" id="mosaic" aria-hidden="true"></div>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Filtra">
+  <div class="chips" id="chips" role="group" aria-label="Filtra per materia"></div>
+</nav>
+
+<main class="band" style="padding-top:8px">
+  <div class="wrap">
+    <p class="count" id="count"></p>
+    <div id="list"></div>
+  </div>
+</main>
+
+<section class="band alt" id="come">
+  <div class="wrap">
+    <h2>Come usarli con NotebookLM e Gemini</h2>
+    <p><b>Il punto chiave:</b> NotebookLM (ora anche «Gemini Notebook») accetta lo stile solo a parole, non un'immagine. Dal marzo 2026 ha 10 stili preset per le infografiche (Sketch Note, Kawaii, Professional, Scientific, Anime, Clay, Editorial, Instructional, Bento Grid, Bricks) più un campo prompt libero, dall'icona a matita accanto a «Infografica» nel pannello Studio. I preset sono riservati agli utenti maggiorenni.</p>
+    <ol class="steps">
+      <li>Scegli un riferimento e una delle sue quattro immagini. Puoi salvarla dal sito: è nella cartella <code>img</code>.</li>
+      <li>Nell'app Gemini carica l'immagine e chiedi di tradurla in parole con il prompt qui sotto.</li>
+      <li>In NotebookLM scegli il preset più vicino (Sketch Note per Dear Data, Instructional per Isotype, Editorial per la grafica svizzera) e incolla nel prompt la descrizione di stile, le parole chiave della scheda e il blocco BES.</li>
+      <li>Quando un risultato ti piace, salva il prompt: lo stile resterà uguale per tutto l'anno.</li>
+      <li>Per usare un'immagine vera come riferimento, passa all'app Gemini con Nano Banana Pro: carica l'immagine di stile e il contenuto e chiedi «Crea un'infografica con questo contenuto, con lo stesso medium, palette, tecnica, texture e stile generale dell'immagine 1». Secondo la documentazione Google accetta fino a 3 immagini come riferimento di stile.</li>
+      <li>Controlla sempre il testo: i generatori sbagliano ancora parole e numeri.</li>
+    </ol>
+    <div class="two">
+      <div class="box">
+        <h3>Prompt per far descrivere uno stile a Gemini</h3>
+        <span class="kw" id="pdesc" style="margin-top:10px">Descrivi lo stile visivo di questa immagine in inglese, in 60 parole, come istruzioni per un generatore di infografiche: tecnica, palette con codici HEX, tipo di linee, tipografia, sfondo, densità. Non nominare l'autore.</span>
+        <div class="row"><button class="btn" data-copy-id="pdesc">Copia</button></div>
+      </div>
+      <div class="box">
+        <h3>Blocco BES da aggiungere a ogni prompt</h3>
+        <span class="kw" id="pbes" style="margin-top:10px">Accessibility rules: plain single-colour light cream background (not pure white), dark grey text, large sans-serif font, headings clearly bigger, max 5 short sections, one idea per section, one simple icon next to each text block, same icon for the same concept every time, no background patterns, no decorative clutter, do not rely on red vs green to distinguish information, lots of white space.</span>
+        <div class="row"><button class="btn" data-copy-id="pbes">Copia</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="bes">
+  <div class="wrap two">
+    <div>
+      <h2>Leggibilità per alunni con BES</h2>
+      <h3>British Dyslexia Association, Style Guide 2023</h3>
+      <ul>
+        <li>Font sans serif (Arial, Verdana, Tahoma, Century Gothic, Calibri, Open Sans) da 12-14 pt.</li>
+        <li>Titoli almeno il 20% più grandi del testo.</li>
+        <li>Sfondo di un solo colore, senza motivi o immagini dietro il testo.</li>
+        <li>Testo scuro su fondo chiaro, ma non bianco puro.</li>
+        <li>Mai rosso e verde come unica distinzione.</li>
+      </ul>
+      <h3>Easy-to-Read (Inclusion Europe)</h3>
+      <ul>
+        <li>Foto semplici o disegni chiari che illustrano direttamente il testo.</li>
+        <li>Niente arte astratta, sfondi affollati o immagini solo decorative.</li>
+        <li>L'immagine sta accanto o sopra il testo che descrive.</li>
+        <li>Stesso simbolo ogni volta che si nomina lo stesso concetto.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Consigli</h2>
+      <ol class="steps">
+        <li><b>Tre o quattro «stili di casa»</b>, non uno nuovo ogni volta: per esempio Isotype per matematica e storia, collage di carta per scienze, grafica svizzera per le lingue, ARASAAC per gli alunni in CAA. La coerenza aiuta gli alunni più dello stile in sé.</li>
+        <li><b>Disabilità intellettiva o autismo:</b> stile ARASAAC o Isotype, blocco BES, livello di dettaglio «Concise» in NotebookLM.</li>
+        <li><b>Musica:</b> puntini colorati su una linea del tempo per la struttura del brano (come Hamilton) e pittogrammi per le famiglie di strumenti.</li>
+        <li><b>Il bollino è una valutazione generale:</b> ogni alunno ha le sue preferenze di colore di fondo e dimensione del carattere.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="avvertenze">
+  <div class="wrap">
+    <h2>Avvertenze</h2>
+    <ul>
+      <li><b>Diritti d'autore.</b> Le immagini sono raccolte per uso privato e didattico e restano dei rispettivi autori. Non pubblicare il sito online e non far «rifare» tavole o personaggi: usa le immagini come ispirazione di stile. Nei prompt non nominare artisti viventi; le parole chiave descrivono lo stile senza farlo.</li>
+      <li><b>ARASAAC</b> è in licenza CC BY-NC-SA: uso non commerciale con attribuzione (autore Sergio Palao, proprietà Gobierno de Aragón, ARASAAC). Byrne (1847) è di pubblico dominio.</li>
+      <li><b>Le funzioni AI cambiano spesso:</b> nomi, preset e limiti di NotebookLM sono quelli di novembre 2026.</li>
+      <li><b>Fonti delle immagini:</b> siti degli autori, musei e archivi quando possibile; per alcune voci copie pubblicate su altri siti (indicati sotto ogni scheda). Qualche immagine è a bassa risoluzione.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="band"><div class="wrap">Catalogo preparato a novembre 2026 a partire da una ricerca sul web.</div></footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Immagine ingrandita">
+  <button class="x" id="lbx" aria-label="Chiudi">✕</button>
+  <button class="pv" id="lbp" aria-label="Immagine precedente">‹</button>
+  <img id="lbi" alt="">
+  <div class="cap" id="lbc"></div>
+  <button class="nx" id="lbn" aria-label="Immagine successiva">›</button>
+</div>
+
+<script>
+{
+const MAT=['Italiano','Spagnolo','Inglese','Musica','Storia','Matematica','Scienze'];
+const BES={g:'adatto',y:'da semplificare',r:'solo copertina'};
+const META={"1": {"r": 1, "src": "David Rumsey Map Collection", "url": "https://www.davidrumsey.com/luna/servlet/view/search?q=Gesellschaft%20und%20Wirtschaft%20Neurath", "credit": "Otto Neurath, Gerd Arntz e Gesellschafts- und Wirtschaftsmuseum Wien, atlante «Gesellschaft und Wirtschaft» (1930)", "caps": ["Produzione di cereali e riso dal 1860", "Eserciti in età moderna", "Forme di governo nella cultura occidentale", "Impero romano: popolazione"]}, "2": {"r": 2, "src": "NLM Digital Collections; The Marginalian", "url": "https://collections.nlm.nih.gov/catalog/nlm:nlmuid-101532434-img", "credit": "Fritz Kahn, illustrazioni da «Das Leben des Menschen» e opere divulgative (1922-1931)", "caps": ["Muscoli e campanello: il riflesso come un circuito (1927)", "«L'uomo come palazzo industriale» (1926)", "Il ciclo dell'energia e della materia", "Dall'occhio alla voce: vedere un'auto e dire «auto»"]}, "3": {"r": 3, "src": "Wikimedia Commons (pubblico dominio)", "url": "https://commons.wikimedia.org/wiki/File:Byrne-60.png", "credit": "Oliver Byrne, «The First Six Books of the Elements of Euclid» (1847)", "caps": ["Il teorema di Pitagora", "Libro II: quadrati e rettangoli a colori", "Pentagono inscritto nel cerchio", "Libro I: angoli e parallelogrammi"]}, "4": {"r": 4, "src": "eMuseum, Museum für Gestaltung Zürich", "url": "https://www.emuseum.ch/search/M%C3%BCller-Brockmann%20Konzert", "credit": "Josef Müller-Brockmann, manifesti per la Tonhalle di Zurigo (anni '50-'70)", "caps": ["Clara Haskil: i tasti del pianoforte", "Musica viva: nomi in diagonale", "Musica viva: cerchi di linee colorate", "Beethoven: archi concentrici"]}, "5": {"r": 5, "src": "oladaniel.com", "url": "https://oladaniel.com/maps", "credit": "Aleksandra e Daniel Mizieliński, «Mappe» (Mapy, 2012)", "caps": ["Nepal", "Sudafrica", "Italia: la tavola dei cibi", "Particolare: animali e paesaggi"]}, "6": {"r": 6, "src": "owendavey.com", "url": "https://owendavey.com/Fanatical-About-Frogs-1", "credit": "Owen Davey, serie «About» (Flying Eye Books)", "caps": ["«Fanatical About Frogs»: rane in scala", "«Fanatical About Frogs»: come cacciano", "«Passionate About Penguins»", "«Curious About Crocodiles»"]}, "7": {"r": 7, "src": "illustratingdata.com, Pinterest, Flickr, ResearchGate", "url": "https://illustratingdata.com/2022/06/22/classification/", "credit": "Steve Jenkins e Robin Page, libri illustrati a collage di carta", "caps": ["«What Do You Do with a Tail Like This?»: gli occhi", "Aquila arpia («Creature Features»)", "Coleottero in carta ritagliata", "Geco e capra di montagna"]}, "8": {"r": 8, "src": "Pinterest; experimenta.es", "url": "https://www.experimenta.es/", "credit": "Isidro Ferrer, illustrazione e manifesti (Spagna)", "caps": ["«Il barbiere di Siviglia» (El Petit Liceu)", "Manifesto: chiavi che diventano un volto", "Mano in stampa a rilievo", "Animali e oggetti: pagina d'album"]}, "9": {"r": 9, "src": "Ministero della Cultura di Taiwan; bigkyiv.com.ua; Gavroche blog; Editorials Valencianes", "url": "https://www.bolognachildrensbookfair.com/en/awards/bolognaragazzi-awards/", "credit": "Libri premiati o segnalati ai BolognaRagazzi Award", "caps": ["Animo Chen (Taiwan): paesaggi", "«З півслова» (Ucraina), menzione speciale 2026", "Tavola da un libro premiato nel 2012", "Media Vaca, «Libros para mañana» (Non Fiction 2016)"]}, "10": {"r": 10, "src": "MoMA; Pinterest; Core77", "url": "https://www.behance.net/FedericaFragapane", "credit": "Federica Fragapane, infografiche per «La Lettura» (Corriere della Sera), Wired e altri", "caps": ["«Noise Pollution» (collezione MoMA)", "«La Lettura»: flussi colorati", "«Go West!» per Wired Italia", "«La Lettura»: forme a foglia"]}, "11": {"r": 11, "src": "Information is Beautiful Awards; Laughing Squid; Pinterest; shirleywu.studio", "url": "https://www.informationisbeautifulawards.com/showcase/2346", "credit": "Shirley Wu, «An Interactive Visualization of Every Line in Hamilton» (The Pudding, 2017) e altri progetti", "caps": ["Hamilton: personaggi e temi", "Hamilton: ogni verso a puntini", "Hamilton: chi canta e quando", "Grafico a bolle per un cliente (shirleywu.studio)"]}, "12": {"r": 12, "src": "Behance", "url": "https://www.behance.net/gallery/54166389/_", "credit": "Li Peijie, «Han Opera – I cinque buffoni» (汉剧－五丑), infografica sull'Opera Han", "caps": ["Storia dell'Opera Han come edificio", "I cinque ruoli comici", "Mappa, cronologia e dati del genere", "Movimenti di scena in sequenza"]}, "13": {"r": 13, "src": "visualcinnamon.com", "url": "https://www.visualcinnamon.com/portfolio/", "credit": "Nadieh Bremer, Visual Cinnamon", "caps": ["«Searching for Birds»", "«Why Do Cats and Dogs…?»", "«Hubble's 30-year legacy»", "«Olympic Feathers»"]}, "14": {"r": 14, "src": "truth-and-beauty.net", "url": "https://truth-and-beauty.net/projects", "credit": "Moritz Stefaner, studio Truth & Beauty", "caps": ["«The Rhythm of Food»: il calendario dei cibi", "OECD Better Life Index: fiori per paese", "OECD Regional Well-Being", "«Where the wild bees are»"]}, "15": {"r": 15, "src": "artzealous.com; Brooklyn Museum; artnet; Pinterest", "url": "https://www.brooklynmuseum.org/exhibitions/mona_chalabi", "credit": "Mona Chalabi, illustrazioni di dati disegnate a mano", "caps": ["Un giorno 140 inseparabili impareranno a volare", "Foglie degli alberi di New York (Brooklyn Museum)", "Quando le politiche saranno il 50%?", "Il mese di picco dei virus influenzali"]}, "16": {"r": 16, "src": "dear-data.com", "url": "https://www.dear-data.com/all", "credit": "Giorgia Lupi e Stefanie Posavec, «Dear Data» (2014-2015)", "caps": ["Cartolina: foglie di dati", "Cartolina: ovali colorati", "Cartolina: fiori di dati", "Il retro: la legenda scritta a mano"]}, "17": {"r": 17, "src": "Pinterest; Hami Book; Wallpapers.com; WallpaperAccess", "url": "https://kurzgesagt.org", "credit": "Kurzgesagt – In a Nutshell, illustrazioni da video e dal libro «Immune»", "caps": ["Le cellule del sistema immunitario", "Dentro il corpo: cellule in azione («Immune»)", "Pianeti e comete", "Astronauti su un pianeta lontano"]}, "18": {"r": 18, "src": "Information is Beautiful Awards; Complexity Science Hub; SciTechDaily; Dribbble", "url": "https://csh.ac.at/news/yang-wins-information-is-beautiful-award/", "credit": "Liuhuaying Yang (Complexity Science Hub, Vienna)", "caps": ["«Zoonotic Web»: la rete delle malattie animali", "«The Pathogen Parade»: comunità di patogeni", "«Zoonotic Web» in versione scura", "«The Rise and Fall of the Greater China's Economy»"]}, "19": {"r": 19, "src": "Cool Infographics; Pinterest; densitydesign.org; Flickr (DensityDesign)", "url": "https://densitydesign.org", "credit": "DensityDesign Lab, Politecnico di Milano", "caps": ["«Visualizing the School of Design»: i flussi degli studenti", "La complessità dei flussi di finanza per il clima", "Flussi a nastro (Conferenza di Produzione)", "«Politecnico System»: mappa a macchie colorate"]}, "20": {"r": 20, "src": "arasaac.org", "url": "https://arasaac.org", "credit": "Pittogrammi di Sergio Palao, ARASAAC (Gobierno de Aragón), licenza CC BY-NC-SA", "caps": ["leggere", "scrivere", "cantare", "contare"]}};
+const R=[
+{n:'Isotype – Otto Neurath e Gerd Arntz',k:'isotype',t:'Stile storico (anni \'20-\'30)',b:'g',f:'Arntz disegnò più di 4000 pittogrammi per il metodo di statistica visiva di Neurath; ogni figura era una linoleografia fatta a mano.',p:'Segno piatto e pesante, «a timbro»: niente del lucido dell\'AI. La regola «una figura = una quantità» aiuta chi fatica con i numeri.',m:['Matematica','Storia','Scienze','Musica'],kw:'flat silhouette pictograms, repeated identical icons to show quantity, 1930s Vienna statistical chart, limited palette of black red and ochre on cream paper, no gradients, no perspective, bold sans-serif labels, linocut-like solid shapes'},
+{n:'Fritz Kahn – il corpo come macchina',k:'kahn',t:'Stile storico (1926)',b:'r',f:'Kahn (1888-1968) è considerato un pioniere dell\'infografica; il poster «L\'uomo come palazzo industriale» è del 1926.',p:'Spiega i processi invisibili del corpo con metafore di macchine e fabbriche. L\'originale è fitto: chiedi una sola metafora per tavola.',m:['Scienze'],kw:'1920s scientific cutaway illustration, human body depicted as a machine or factory with tiny workers, single clear visual metaphor, muted vintage print colours, cream background, numbered labels, art deco technical drawing'},
+{n:'L\'Euclide di Oliver Byrne (1847)',k:'byrne',t:'Libro storico',b:'g',f:'Byrne sostituì le lettere degli Elementi con forme colorate «per la maggiore facilità di chi impara»; uno dei primi libri stampati a più colori.',p:'Rosso, giallo, blu e nero: il colore è l\'informazione, non decorazione.',m:['Matematica','Italiano'],kw:'19th-century geometry book style, flat primary colours red yellow blue and black, shapes colour-coded instead of letters, generous white space, cream paper, classic serif headings, minimal and precise'},
+{n:'Grafica svizzera – Josef Müller-Brockmann',k:'swiss',t:'Stile (anni \'50-\'70)',b:'g',f:'I manifesti per la Tonhalle di Zurigo sono tra gli esempi più celebri dello Stile tipografico internazionale.',p:'Griglia rigorosa, tipografia grande, pochi colori pieni: l\'opposto del patinato. I suoi manifesti sono per concerti, quindi perfetti anche per musica.',m:['Inglese','Spagnolo','Italiano','Matematica','Musica'],kw:'Swiss modernist poster layout, strict grid, large bold sans-serif typography, flush-left text, two or three flat colours, lots of empty space, no illustrations except simple geometric shapes, high contrast'},
+{n:'Aleksandra e Daniel Mizieliński – «Mappe»',k:'mappe',t:'Libro illustrato (2012)',b:'r',f:'Oltre 3 milioni di copie in più di 30 paesi; Prix Sorcières, Premio Andersen 2013, New York Times Best Illustrated 2013.',p:'Tratto a mano, palette terrosa, piccoli disegni-didascalia. Le tavole sono affollate: chiedi al massimo 6-8 elementi.',m:['Storia','Spagnolo','Inglese','Italiano'],kw:'hand-drawn illustrated map, earthy muted palette of ochre teal and brick red, small naive icons of landmarks animals and food, hand-lettered labels, textured paper feel, few elements, clear outline of the country'},
+{n:'Owen Davey – serie «About»',k:'davey',t:'Illustratore',b:'g',f:'«Smart About Sharks»: oro ai 3x3 Picture Book Awards 2017; «Mad About Monkeys»: candidato alla Kate Greenaway Medal 2016.',p:'Forme geometriche semplici ma organiche, palette «polverose», leggera grana.',m:['Scienze','Inglese'],kw:'mid-century inspired flat geometric illustration, simplified organic shapes, limited harmonious palette of teal mustard and coral, subtle grain texture, clean silhouettes on plain background, infographic book page for children'},
+{n:'Steve Jenkins e Robin Page – collage di carta',k:'jenkins',t:'Illustratori / libri',b:'g',f:'«What Do You Do with a Tail Like This?» ha ricevuto la Caldecott Honor 2004.',p:'Animali fatti di carta strappata e ritagliata su fondo bianco: texture vere, non digitali.',m:['Scienze','Italiano','Inglese'],kw:'cut and torn paper collage, realistic animal shapes made from textured handmade papers, plain off-white background, soft drop shadows, one subject per panel, short label underneath'},
+{n:'Isidro Ferrer – illustrazione spagnola',k:'ferrer',t:'Illustratore / designer',b:'y',f:'Premio Nacional de Diseño 2002 e Premio Nacional de Ilustración 2006 (Spagna).',p:'Assemblaggi di oggetti trovati, legno, carta e tipografia, con umorismo poetico.',m:['Spagnolo','Italiano','Musica'],kw:'poetic object assemblage illustration, found objects wood and paper combined into characters, warm muted colours, playful visual metaphors, bold hand-cut lettering, plain background'},
+{n:'BolognaRagazzi Award – libri premiati',k:'bologna',t:'Premio internazionale',b:'y',f:'Nel 2025, alla 60ª edizione, 3.858 libri candidati da 68 paesi.',p:'La miniera più aggiornata di illustrazione divulgativa non «da AI», con stili diversissimi ogni anno.',m:MAT.slice(),kw:'(scegli una delle quattro tavole e usa il prompt di descrizione per Gemini)'},
+{n:'Federica Fragapane – «La Lettura»',k:'fragapane',t:'Information designer italiana',b:'y',f:'Menzioni agli Information is Beautiful Awards 2014 e 2017, Core77 Design Awards 2018, bronzo Malofiej 2020; «Noise Pollution» è nella collezione del MoMA.',p:'Forme organiche come piante o costellazioni, colori delicati, legenda sempre presente. Riduci a una sola variabile visiva.',m:['Storia','Italiano','Scienze'],kw:'elegant organic data visualization, petal and branch shapes encoding data, soft pastel colours on cream background, thin lines, clear legend box, editorial magazine layout, generous margins'},
+{n:'Shirley Wu – ogni verso di «Hamilton»',k:'wu',t:'Data visualization',b:'y',f:'Bronzo agli Information is Beautiful Awards 2017 (Arts, Entertainment & Pop Culture).',p:'Visualizza un musical: chi canta e quali temi ritornano, con piccoli segni colorati.',m:['Musica','Inglese'],kw:'music structure visualization, small coloured dots or dashes for each line of a song, one colour per singer or theme, horizontal timeline, dark text on light background, minimal legend'},
+{n:'Li Peijie – l\'Opera Han',k:'opera',t:'Infografica',b:'y',f:'Bronzo ex aequo nel voto del pubblico agli Information is Beautiful Awards 2017.',p:'Unisce la storia di un genere teatrale e musicale a motivi decorativi tradizionali, in rosso e blu.',m:['Musica','Storia'],kw:'cultural history infographic, traditional ornament motifs used sparingly as frames, rich red and blue accents on white, timeline of a music genre, isometric building as metaphor, simple figure icons'},
+{n:'Nadieh Bremer – Visual Cinnamon',k:'bremer',t:'Data designer',b:'r',f:'Best Individual agli Information is Beautiful Awards 2017, argento Malofiej 2020, Webby 2026 (People\'s Voice).',p:'«Fiori» di dati radiali con palette vivacissime. Troppo complessi per una scheda, ottimi per poster di classe.',m:['Scienze','Matematica'],kw:'radial data art, circular flower-like composition, vibrant saturated palette, thin lines, mathematical symmetry, playful small illustrations'},
+{n:'Moritz Stefaner – Truth & Beauty',k:'stefaner',t:'Studio di data visualization',b:'y',f:'Undici premi agli Information is Beautiful Awards in sette anni; «Rhythm of Food» oro nel 2017.',p:'Grafici radiali «a orologio» e fiori di indicatori: cicli e confronti leggibili a colpo d\'occhio.',m:['Scienze','Matematica','Spagnolo'],kw:'radial calendar chart, twelve months arranged as a clock, each segment coloured by season, clean sans-serif labels, white space, one dataset per chart'},
+{n:'Mona Chalabi – dati disegnati a mano',k:'chalabi',t:'Giornalista dei dati / illustratrice',b:'g',f:'Premio Pulitzer 2023 (Illustrated Reporting and Commentary).',p:'Confronti di grandezza fatti con oggetti quotidiani e grafici su carta millimetrata: il dato diventa umano.',m:['Matematica','Storia','Scienze'],kw:'hand-drawn data illustration, everyday objects used to compare quantities, flat bold colour blocks, slightly wobbly ink lines, handwritten labels, plain light background, one comparison per image'},
+{n:'«Dear Data» – Giorgia Lupi e Stefanie Posavec',k:'deardata',t:'Progetto / libro',b:'g',f:'Le 104 cartoline originali sono entrate nella collezione permanente del MoMA nel 2016.',p:'Dati della vita quotidiana a pennarello su cartolina, con la legenda scritta a mano sul retro. Modello perfetto da far rifare agli alunni.',m:['Matematica','Italiano','Inglese'],kw:'hand-drawn data postcard, coloured marker and pen on white card, simple repeated symbols with a handwritten legend, personal diary feel, imperfect lines, small number of categories'},
+{n:'Kurzgesagt – In a Nutshell',k:'kurz',t:'Studio di animazione / YouTube',b:'g',f:'Circa 25,6-25,8 milioni di iscritti nell\'autunno 2026, a seconda della fonte.',p:'Flat design, colori saturi su fondo scuro: i ragazzi lo riconoscono subito. Stile molto riconoscibile: usa solo la descrizione generica.',m:['Scienze','Storia'],kw:'flat vector explainer style, bold saturated colours, soft glow highlights, rounded simple characters, dark navy background, clear focal object in the centre, minimal text'},
+{n:'Liuhuaying Yang – reti di dati',k:'yang',t:'Data designer',b:'y',f:'Due ori agli Information is Beautiful Awards 2025 («Zoonotic Web»); la giuria ne ha lodato i layout puliti e le metafore creative.',p:'Reti e catene leggibili, con un flusso intuitivo e icone semplici.',m:['Scienze','Storia'],kw:'clean network diagram with creative metaphor, nodes as simple animal icons, soft natural palette, intuitive left-to-right flow, generous spacing, short labels'},
+{n:'DensityDesign Lab – Politecnico di Milano',k:'density',t:'Laboratorio di ricerca italiano',b:'y',f:'«Studio of the Year» agli Information is Beautiful Awards 2017.',p:'Flussi a nastro e mappe con frecce curve, palette calma e un colore d\'accento.',m:['Storia','Scienze','Matematica'],kw:'academic information design, flow diagram with curved coloured ribbons, muted palette with one accent colour, precise thin typography, clear legend, white background'},
+{n:'ARASAAC – pittogrammi per la CAA',k:'arasaac',t:'Archivio di simboli (Gobierno de Aragón, disegni di Sergio Palao)',b:'g',f:'Licenza Creative Commons BY-NC-SA: uso libero non commerciale con attribuzione.',p:'È il linguaggio visivo che molti alunni con autismo o in CAA già conoscono: meno carico cognitivo.',m:MAT.slice(),kw:'AAC pictogram style, thick black outlines, flat bright colours, white background, one concept per symbol, front-facing simple figures, label word under each symbol in large sans-serif'}
+];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const img=(i,j)=>`img/r${String(i+1).padStart(2,'0')}_${R[i].k}_${j+1}.jpg`;
+const ALL=[];R.forEach((r,i)=>{const m=META[i+1]||{caps:[],credit:'',src:'',url:''};r.meta=m;for(let j=0;j<4;j++)ALL.push({i,j,src:img(i,j),cap:m.caps[j]||'',credit:m.credit})});
+document.getElementById('mosaic').innerHTML=R.map((r,i)=>`<img src="${img(i,0)}" alt="" loading="lazy">`).join('');
+let cur='Tutte';
+const chips=document.getElementById('chips'),list=document.getElementById('list');
+chips.innerHTML=['Tutte'].concat(MAT).concat(['Solo adatti BES']).map(m=>`<button class="chip" type="button" aria-pressed="${m===cur}" data-m="${m}">${m}</button>`).join('');
+const card=(r,i)=>`<article class="ref" id="r${i+1}"><div class="txt"><span class="num">${String(i+1).padStart(2,'0')} / 20</span><h3>${esc(r.n)}</h3>
+<div class="meta"><span class="bes ${r.b}">${BES[r.b]}</span><span class="tag">${esc(r.t)}</span></div>
+<p><b>Fatto:</b> ${esc(r.f)}</p><p><b>Perché è originale:</b> ${esc(r.p)}</p>
+<div class="mat">${r.m.map(x=>`<span>${x}</span>`).join('')}</div>
+${r.kw.startsWith('(')?`<p class="tag">${esc(r.kw)}</p>`:`<span class="kw">${esc(r.kw)}</span><div class="row"><button class="btn" type="button" data-copy="${esc(r.kw)}">Copia parole chiave</button></div>`}
+<div class="credit">${esc(r.meta.credit)}. Immagini da: <a href="${esc(r.meta.url)}" target="_blank" rel="noopener">${esc(r.meta.src)}</a></div></div>
+<div class="gal">${[0,1,2,3].map(j=>`<button class="thumb" type="button" data-i="${i}" data-j="${j}" aria-label="Ingrandisci: ${esc(r.meta.caps[j]||'')}"><img src="${img(i,j)}" alt="${esc(r.meta.caps[j]||r.n)}" loading="lazy"><span>${esc(r.meta.caps[j]||'')}</span></button>`).join('')}</div></article>`;
+const vis=()=>R.map((r,i)=>[r,i]).filter(([r])=>cur==='Tutte'||(cur==='Solo adatti BES'?r.b==='g':r.m.includes(cur)));
+const render=()=>{const v=vis();list.innerHTML=v.length?v.map(([r,i])=>card(r,i)).join(''):'<p class="empty">Nessun riferimento.</p>';document.getElementById('count').textContent=v.length+(v.length===1?' riferimento':' riferimenti')+(cur==='Tutte'?'':' · '+cur)};
+chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;cur=b.dataset.m;for(const c of chips.children)c.setAttribute('aria-pressed',c.dataset.m===cur);render();window.scrollTo({top:list.getBoundingClientRect().top+scrollY-90})});
+render();
+/* copia */
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy],[data-copy-id]');if(!b)return;const txt=b.dataset.copy||document.getElementById(b.dataset.copyId).textContent;const old=b.textContent;
+ try{await navigator.clipboard.writeText(txt);b.textContent='Copiato';b.classList.add('ok')}catch(err){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');b.textContent='Copiato'}catch(e2){b.textContent='Seleziona e copia a mano'}ta.remove()}
+ setTimeout(()=>{b.textContent=old;b.classList.remove('ok')},1800)});
+/* lightbox */
+const lb=document.getElementById('lb'),lbi=document.getElementById('lbi'),lbc=document.getElementById('lbc');let pos=0,seq=[];
+const show=()=>{const a=seq[pos];lbi.src=a.src;lbi.alt=a.cap;lbc.innerHTML=`${esc(R[a.i].n)} — ${esc(a.cap)}<small>${esc(a.credit)} · ${pos+1} di ${seq.length}</small>`};
+list.addEventListener('click',e=>{const t=e.target.closest('.thumb');if(!t)return;const v=new Set(vis().map(x=>x[1]));seq=ALL.filter(a=>v.has(a.i));pos=seq.findIndex(a=>a.i==t.dataset.i&&a.j==t.dataset.j);show();lb.classList.add('on');document.body.style.overflow='hidden';document.getElementById('lbx').focus()});
+const close=()=>{lb.classList.remove('on');document.body.style.overflow=''};
+const go=d=>{pos=(pos+d+seq.length)%seq.length;show()};
+document.getElementById('lbx').onclick=close;document.getElementById('lbp').onclick=()=>go(-1);document.getElementById('lbn').onclick=()=>go(1);
+lb.addEventListener('click',e=>{if(e.target===lb)close()});
+document.addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+let x0=null;lb.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)go(dx<0?1:-1);x0=null});
+}
+</script>
+</body>
+</html>
